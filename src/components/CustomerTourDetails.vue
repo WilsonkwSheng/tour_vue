@@ -1,5 +1,10 @@
 <template>
   <div>
+    <success-message :message="successMessage" :is-visible="showSuccessMessage" />
+    <error-message :message="errorMessage" :is-visible="showErrorMessage" />
+  </div>
+  <button @click="bookTour" v-if="tour">Book Tour</button>
+  <div>
     <h2>Tour Details</h2>
     <div v-if="tour">
       <h3>{{ tour.title }}</h3>
@@ -30,12 +35,22 @@
 
 <script>
 import axios from 'axios';
+import SuccessMessage from './SuccessMessage.vue';
+import ErrorMessage from './ErrorMessage.vue';
 
 export default {
   props: ['id'],
+  components: {
+    SuccessMessage,
+    ErrorMessage
+  },
   data() {
     return {
-      tour: null
+      tour: null,
+      successMessage: '',
+      showSuccessMessage: false,
+      errorMessage: '',
+      showErrorMessage: false,
     };
   },
   mounted() {
@@ -46,13 +61,29 @@ export default {
       const tourId = this.id;
       axios.get(`http://localhost:3000/customer_tours/${tourId}`)
         .then(response => {
-          console.log('response', response)
           this.tour = response.data;
         })
         .catch(error => {
           console.error('Error fetching task details:', error);
         });
-    }
+    },
+    bookTour() {
+      this.successMessage = '';
+      this.showSuccessMessage = false;
+      this.errorMessage = '';
+      this.showErrorMessage = false;
+
+      const tourId = this.tour.id;
+      axios.post('http://localhost:3000/bookings', { tour_id: tourId })
+        .then(() => {
+          this.successMessage = 'You have successfully book this tour!';
+          this.showSuccessMessage = true;
+        })
+        .catch(error => {
+          this.errorMessage = error.response.data.error;
+          this.showErrorMessage = true;
+        });
+    },
   }
 };
 </script>
