@@ -1,26 +1,31 @@
 <template>
-  <div>
-    <success-message :message="successMessage" :is-visible="showSuccessMessage" />
-    <error-message :message="errorMessage" :is-visible="showErrorMessage" />
-  </div>
-  <div>
-    <h2>Sign Up</h2>
-    <form @submit.prevent="signUp">
+  <div class="flex justify-center items-center h-full">
+    <div class="bg-white shadow-md rounded-lg p-6 md:p-10 w-full max-w-md">
+      <success-message :message="successMessage" :is-visible="showSuccessMessage" />
+      <error-message :message="errorMessage" :is-visible="showErrorMessage" />
+      
       <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" v-model="name" required>
+        <h2 class="text-2xl font-semibold mb-6">Sign Up</h2>
+        <form @submit.prevent="signUp">
+          <div class="mb-4">
+            <label for="name" class="block text-lg font-medium mb-2">Name:</label>
+            <input type="text" id="name" v-model="name" required class="w-full border rounded-md py-2 px-3 text-lg">
+          </div>
+          <div class="mb-4">
+            <label for="email" class="block text-lg font-medium mb-2">Email:</label>
+            <input type="email" id="email" v-model="email" required class="w-full border rounded-md py-2 px-3 text-lg">
+          </div>
+          <div class="mb-6">
+            <label for="password" class="block text-lg font-medium mb-2">Password:</label>
+            <input type="password" id="password" v-model="password" required class="w-full border rounded-md py-2 px-3 text-lg">
+          </div>
+          <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 text-white py-2 px-6 rounded-lg text-lg hover:bg-blue-600">Sign Up</button>
+            <router-link to="/sign_in" class="text-lg text-blue-500 hover:underline">Sign In</router-link>
+          </div>
+        </form>
       </div>
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" required>
-      </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" v-model="password" required>
-      </div>
-      <button type="submit">Sign Up</button>
-      <router-link to="/signin">Sign In</router-link>
-    </form>
+    </div>
   </div>
 </template>
 
