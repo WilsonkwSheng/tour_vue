@@ -4,6 +4,7 @@ import SignIn from "./components/SignIn.vue";
 
 import TourList from "./components/TourList.vue";
 import CreateTour from "./components/CreateTour.vue";
+import TourDetails from "./components/TourDetails.vue";
 
 const routes = [
   {
@@ -21,6 +22,11 @@ const routes = [
   {
     path: "/create_tours",
     component: CreateTour,
+  },
+  {
+    path: "/tours/:id",
+    component: TourDetails,
+    props: true,
   },
 ];
 

@@ -9,6 +9,7 @@
         <p>{{ tour.region }}</p>
         <p>{{ tour.city }}</p>
         <p>{{ tour.travel_type }}</p>
+        <router-link :to="'/tours/' + tour.id">View Details</router-link>
       </li>
     </ul>
   </div>
