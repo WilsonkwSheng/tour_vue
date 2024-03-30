@@ -1,17 +1,14 @@
 <template>
-  <div>
-    <router-link to="/create_tours" class="button">Create Tour</router-link>
-    <h2>Tour List</h2>
-    <ul>
-      <li v-for="tour in tours" :key="tour.id">
-        <p>{{ tour.title }}</p>
-        <p>{{ tour.description }}</p>
-        <p>{{ tour.region }}</p>
-        <p>{{ tour.city }}</p>
-        <p>{{ tour.travel_type }}</p>
-        <router-link :to="'/tours/' + tour.id">View Details</router-link>
-      </li>
-    </ul>
+  <div class="container mx-auto py-8">
+    <router-link to="/create_tours" class="btn">Create Tour</router-link>
+    <h2 class="text-3xl font-bold mt-8 mb-4">Tour List</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div v-for="tour in tours" :key="tour.id" class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-bold mb-2">{{ tour.title }}</h3>
+        <p class="text-gray-700 mb-4">{{ tour.description }}</p>
+        <router-link :to="'/tours/' + tour.id" class="btn btn-primary">View Details</router-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -42,4 +39,26 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background-color: #4a90e2;
+  color: #ffffff;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #3572b0;
+}
+
+.btn-primary {
+  background-color: #4a90e2;
+}
+
+.btn-primary:hover {
+  background-color: #3572b0;
+}
 </style>
