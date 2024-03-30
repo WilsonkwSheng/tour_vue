@@ -1,48 +1,73 @@
 <template>
-  <div>
+  <div class="container mx-auto py-8">
     <error-message :message="errorMessage" :is-visible="showErrorMessage" />
-  </div>
-  <div>
-    <h2>Create Tour</h2>
-    <form @submit.prevent="createTour">
-      <label for="title">Title:</label>
-      <input type="text" id="title" v-model="tour.title" required>
-
-      <label for="description">Description:</label>
-      <textarea id="description" v-model="tour.description" required></textarea>
-
-      <label for="region">Region:</label>
-      <input type="text" id="region" v-model="tour.region" required>
-
-      <label for="city">City:</label>
-      <input type="text" id="city" v-model="tour.city" required>
-
-      <label for="travel_type">Travel Type:</label>
-      <input type="text" id="travel_type" v-model="tour.travel_type" required>
-
-      <h3>Itinerary</h3>
-      <div v-for="(itinerary, index) in tour.itineraries_attributes" :key="index">
-        <h4>Itinerary {{ index + 1 }}</h4>
-        <label for="title">Title:</label>
-        <input type="text" v-model="itinerary.title" required>
-        <label for="description">Description:</label>
-        <textarea v-model="itinerary.description" required></textarea>
-        <label for="day">Day:</label>
-        <input type="text" v-model="itinerary.day" required>
-        <label for="date">Date:</label>
-        <input type="date" v-model="itinerary.date" required>
-        <label for="start_at">Start Time:</label>
-        <input type="time" v-model="itinerary.start_at" required>
-        <label for="end_at">End Time:</label>
-        <input type="time" v-model="itinerary.end_at" required>
-        <label for="images">Images:</label>
-        <input type="file" id="images" @change="handleFileUpload($event, index)" multiple accept="image/*">
-        <button type="button" @click="removeItinerary(index)">Remove Itinerary</button>
-      </div>
-      <button type="button" @click="addItinerary">Add Itinerary</button>
-
-      <button type="submit">Create Tour</button>
-    </form>
+    <div>
+      <h2 class="text-3xl font-bold mb-8">Create Tour</h2>
+      <form @submit.prevent="createTour" class="max-w-md mx-auto">
+        <div class="mb-4">
+          <label for="title" class="block text-sm font-semibold">Title:</label>
+          <input type="text" id="title" v-model="tour.title" required class="input" placeholder="Enter title">
+        </div>
+        <div class="mb-4">
+          <label for="description" class="block text-sm font-semibold">Description:</label>
+          <textarea id="description" v-model="tour.description" required class="input" placeholder="Enter description"></textarea>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mb-4">
+            <label for="region" class="block text-sm font-semibold">Region:</label>
+            <input type="text" id="region" v-model="tour.region" required class="input" placeholder="Enter region">
+          </div>
+          <div class="mb-4">
+            <label for="city" class="block text-sm font-semibold">City:</label>
+            <input type="text" id="city" v-model="tour.city" required class="input" placeholder="Enter city">
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="travel_type" class="block text-sm font-semibold">Travel Type:</label>
+          <input type="text" id="travel_type" v-model="tour.travel_type" required class="input" placeholder="Enter travel type">
+        </div>
+        <h3 class="text-xl font-semibold mb-4">Itinerary</h3>
+        <div v-for="(itinerary, index) in tour.itineraries_attributes" :key="index" class="border border-gray-200 p-4 rounded-lg mb-4">
+          <h4 class="text-lg font-semibold mb-2">Itinerary {{ index + 1 }}</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="title" class="block text-sm font-semibold">Title:</label>
+              <input type="text" v-model="itinerary.title" required class="input" placeholder="Enter title">
+            </div>
+            <div>
+              <label for="description" class="block text-sm font-semibold">Description:</label>
+              <textarea v-model="itinerary.description" required class="input" placeholder="Enter description"></textarea>
+            </div>
+            <div>
+              <label for="day" class="block text-sm font-semibold">Day:</label>
+              <input type="text" v-model="itinerary.day" required class="input" placeholder="Enter day">
+            </div>
+            <div>
+              <label for="date" class="block text-sm font-semibold">Date:</label>
+              <input type="date" v-model="itinerary.date" required class="input">
+            </div>
+            <div>
+              <label for="start_at" class="block text-sm font-semibold">Start Time:</label>
+              <input type="time" v-model="itinerary.start_at" required class="input">
+            </div>
+            <div>
+              <label for="end_at" class="block text-sm font-semibold">End Time:</label>
+              <input type="time" v-model="itinerary.end_at" required class="input">
+            </div>
+            <div>
+              <label for="images" class="block text-sm font-semibold">Images:</label>
+              <input type="file" id="images" @change="handleFileUpload($event, index)" multiple accept="image/*">
+            </div>
+            <div class="flex items-center justify-between">
+              <button type="button" @click="removeItinerary(index)" class="btn btn-danger">Remove Itinerary</button>
+            </div>
+          </div>
+        </div>
+        <button type="button" @click="addItinerary" class="btn btn-secondary">Add Itinerary</button>
+        <div class="mb-3"></div>
+        <button type="submit" class="btn btn-primary">Create Tour</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -139,4 +164,45 @@ export default {
 </script>
 
 <style scoped>
+.input {
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  width: 100%;
+  font-size: 0.875rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #6b7280;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #dc2626;
+  color: #fff;
+}
+
+.btn:hover {
+  background-color: #3b82f6;
+}
+
+.btn-secondary:hover {
+  background-color: #4b5563;
+}
+
+.btn-danger:hover {
+  background-color: #c53030;
+}
 </style>
