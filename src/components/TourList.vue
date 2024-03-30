@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-link to="/create_tours" class="button">Create Tour</router-link>
     <h2>Tour List</h2>
     <ul>
       <li v-for="tour in tours" :key="tour.id">
