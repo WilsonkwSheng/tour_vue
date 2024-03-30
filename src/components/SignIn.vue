@@ -1,6 +1,5 @@
 <template>
   <div>
-    <success-message :message="successMessage" :is-visible="showSuccessMessage" />
     <error-message :message="errorMessage" :is-visible="showErrorMessage" />
   </div>
   <div>
@@ -22,13 +21,11 @@
 
 <script>
 import axios from 'axios';
-import SuccessMessage from './SuccessMessage.vue';
 import ErrorMessage from './ErrorMessage.vue';
 
 export default {
   components: {
     ErrorMessage,
-    SuccessMessage
   },
   data() {
     return {
@@ -36,14 +33,10 @@ export default {
       password: '',
       errorMessage: '',
       showErrorMessage: false,
-      successMessage: '',
-      showSuccessMessage: false
     };
   },
   methods: {
     signIn() {
-      this.successMessage = '';
-      this.showSuccessMessage = false;
       this.errorMessage = '';
       this.showErrorMessage = false;
 
@@ -53,8 +46,7 @@ export default {
       }).then(response => {
           const token = response.data.token;
           localStorage.setItem('token', token);
-          this.successMessage = 'Sign in successful';
-          this.showSuccessMessage = true;
+          this.$router.push('/tour_lists');
         })
         .catch(error => {
           this.errorMessage = error.response.data.error;
