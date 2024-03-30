@@ -19,6 +19,7 @@
         <input type="password" id="password" v-model="password" required>
       </div>
       <button type="submit">Sign Up</button>
+      <router-link to="/signin">Sign In</router-link>
     </form>
   </div>
 </template>
