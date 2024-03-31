@@ -49,8 +49,9 @@ export default {
         email: this.email,
         password: this.password
       }).then(response => {
-          const token = response.data.token;
+          const { token, customer_id } = response.data;
           localStorage.setItem('token', token);
+          localStorage.setItem('customerId', customer_id);
           localStorage.setItem('user_type', 'Customer');
           this.$router.push('/customers_tour_lists');
         })
