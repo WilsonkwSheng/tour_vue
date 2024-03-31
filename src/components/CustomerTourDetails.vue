@@ -5,9 +5,14 @@
         <success-message :message="successMessage" :is-visible="showSuccessMessage" />
         <error-message :message="errorMessage" :is-visible="showErrorMessage" />
       </div>
-      <button @click="bookTour" v-if="tour" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Book Tour
-      </button>
+      <div>
+        <button v-if="!isBooked" @click="bookTour" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Book Tour
+        </button>
+        <button v-else @click="cancelTour" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+          Cancel Tour
+        </button>
+      </div>
     </div>
     <div v-if="tour">
       <p class="text-lg font-semibold">Region: {{ tour.region }}</p>
@@ -70,6 +75,8 @@ export default {
       showSuccessMessage: false,
       errorMessage: '',
       showErrorMessage: false,
+      isBooked: false,
+      customerId: null,
     };
   },
   mounted() {
@@ -80,7 +87,12 @@ export default {
       const tourId = this.id;
       axios.get(`http://localhost:3000/customer_tours/${tourId}`)
         .then(response => {
+          const customerId = localStorage.getItem('customerId')
+          const bookings = response.data.bookings.filter(item => item.customer_id.toString() === customerId)
+          const isBooked = bookings.length > 0;
           this.tour = response.data;
+          this.isBooked = isBooked
+          this.customerId = customerId
         }).then(() => {
           this.initializeSwiper();
         })
@@ -98,6 +110,23 @@ export default {
       axios.post('http://localhost:3000/bookings', { tour_id: tourId })
         .then(() => {
           this.successMessage = 'You have successfully book this tour!';
+          this.showSuccessMessage = true;
+        })
+        .catch(error => {
+          this.errorMessage = error.response.data.error;
+          this.showErrorMessage = true;
+        });
+    },
+    cancelTour() {
+      this.successMessage = '';
+      this.showSuccessMessage = false;
+      this.errorMessage = '';
+      this.showErrorMessage = false;
+
+      const tourId = this.tour.id;
+      axios.delete(`http://localhost:3000/bookings/${tourId}`)
+        .then(() => {
+          this.successMessage = 'You have successfully cancel this tour!';
           this.showSuccessMessage = true;
         })
         .catch(error => {
