@@ -6,6 +6,5 @@
 
 # Remaining enhancements
 
-- Update readme and instructions for setup
 - Dynamically show Book and Unbook tour for customers
 - Add input to upload multiple images when create Tour
