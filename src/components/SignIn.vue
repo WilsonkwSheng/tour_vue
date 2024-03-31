@@ -51,6 +51,7 @@ export default {
       }).then(response => {
           const token = response.data.token;
           localStorage.setItem('token', token);
+          localStorage.setItem('user_type', 'TourHost');
           this.$router.push('/tour_lists');
         })
         .catch(error => {
