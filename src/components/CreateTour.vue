@@ -26,6 +26,11 @@
           <label for="travel_type" class="block text-sm font-semibold">Travel Type:</label>
           <input type="text" id="travel_type" v-model="tour.travel_type" required class="input" placeholder="Enter travel type">
         </div>
+        <div>
+          <label for="images" class="block text-sm font-semibold">Images:</label>
+          <input type="file" id="images" @change="handleTourImagesUpload($event)" multiple accept="image/*">
+        </div>
+        <div class="mb-3"></div>
         <h3 class="text-xl font-semibold mb-4">Itinerary</h3>
         <div v-for="(itinerary, index) in tour.itineraries_attributes" :key="index" class="border border-gray-200 p-4 rounded-lg mb-4">
           <h4 class="text-lg font-semibold mb-2">Itinerary {{ index + 1 }}</h4>
@@ -87,6 +92,7 @@ export default {
         region: '',
         city: '',
         travel_type: '',
+        images: [],
         itineraries_attributes: [{
           day: '',
           date: '',
@@ -116,6 +122,9 @@ export default {
       formData.append('tour[date]', this.tour.date);
       formData.append('tour[start_at]', this.tour.start_at);
       formData.append('tour[end_at]', this.tour.end_at);
+      this.tour.images.forEach((image, i) => {
+        formData.append(`tour[images_attributes][${i}][file]`, image);
+      });
 
       this.tour.itineraries_attributes.forEach((itinerary, index) => {
         formData.append(`tour[itineraries_attributes][${index}][day]`, itinerary.day);
@@ -158,7 +167,12 @@ export default {
       const fileList = event.target.files;
       const images = Array.from(fileList);
       this.tour.itineraries_attributes[index].images = images;
-    }
+    },
+    handleTourImagesUpload(event) {
+      const fileList = event.target.files;
+      const images = Array.from(fileList);
+      this.tour.images = images;
+    },
   }
 };
 </script>
