@@ -1,6 +1,16 @@
 <template>
   <div class="bg-white shadow-md rounded-lg p-6 md:p-10">
     <div v-if="tour">
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="image in tour.images" :key="image.id">
+            <img class="swiper-slide w-full" :src="'http://localhost:3000/' + image.file.url" alt="Itinerary Image">
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
       <p class="text-lg font-semibold">Region: {{ tour.region }}</p>
       <p class="text-lg font-semibold">City: {{ tour.city }}</p>
       <p class="text-lg font-semibold">Travel Type: {{ tour.travel_type }}</p>
@@ -12,7 +22,7 @@
         <h4 class="text-xl font-semibold mt-6 mb-2">Itinerary</h4>
         <div v-for="itinerary in tour.itineraries" :key="itinerary.id" class="mb-8 flex items-center">
           <div v-if="itinerary.images.length > 0" class="mr-4">
-            <div class="swiper">
+            <div class="swiper itinerary-swiper">
               <div class="swiper-wrapper">
                 <div class="swiper-slide" v-for="image in itinerary.images" :key="image.id">
                   <img class="swiper-slide w-full" :src="'http://localhost:3000/' + image.file.url" alt="Itinerary Image">
@@ -91,7 +101,7 @@ export default {
 </script>
 
 <style scoped>
-.swiper {
+.itinerary-swiper {
   max-width: 300px;
 }
 
