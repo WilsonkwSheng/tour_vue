@@ -6,7 +6,6 @@
 
 # Remaining enhancements
 
-- Basic navbar (Home, Sign Out, Sign In, Sign Up)
 - Update readme and instructions for setup
 - Dynamically show Book and Unbook tour for customers
 - Add input to upload multiple images when create Tour
